@@ -1,25 +1,51 @@
 {>"layouts/master" /}
 
 {<body}
-    <div class="row well well-sm">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-5 col-md-offset-5">
-                    <h1>{@pre type="content" key="greeting"/}</h1>
+    <div data-ng-controller="Twitter" data-ng-init="csrf = '{_csrf}'">
+        <div class="row well well-sm" >
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-5 col-md-offset-5">
+                        <h1>{@pre type="content" key="greeting"/}</h1>
+                    </div>
                 </div>
-            </div>
-            <div class="row" data-ng-controller="Twitter">
-                <div class="col-md-5 col-md-offset-5">
-                    <form class="form-inline" role="form">
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Enter text to be analyzed" type="text" data-ng-model="twitter.search" />
-                            <button class="btn btn-success" data-ng-click="Analyze()">Analyze</button>
-                        </div>
-                    </form>
+                <div class="row" >
+                    <div class="col-md-5 col-md-offset-5">
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Enter text to be analyzed" type="search" data-ng-model="twitter.search" />
+                                <button class="btn btn-success" data-ng-click="Analyze()">Analyze</button>
+                                <span><a href="#" data-ng-click="advanced = 1">Advanced</a></span>
+                                <div data-ng-show="advanced">
+                                    <h4>Advanced Filters</h4>
+                                    <label>Count</label><input class="form-control" type="number" min="1" max="100" data-ng-model="twitter.count" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="row well well-sm" data-ng-show="twitter.results">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Results</h3>
+                    </div>
+                </div>
+                <div class="row dashedborder" data-ng-class="{~lb}positive: result.nlp.sentiment === 'Positive', negative: result.nlp.sentiment === 'Negative' {~rb}" data-ng-repeat="result in twitter.results">
+                    <div class="col-md-3">
+                        ~~result.tweet.user~~
+                    </div>
+                    <div class="col-md-9">
+                        ~~result.tweet.text~~
+                    </div>
 
+                </div>
+            </div>
+
+
+        </div>
     </div>
 
     <script type="text/javascript" src="/js/angularapps/base.js"></script>

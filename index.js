@@ -2,11 +2,20 @@
 
 
 var kraken = require('kraken-js'),
+    twitter = require('./lib/twitterconfig'),
     app = {};
 
 
 app.configure = function configure(nconf, next) {
     // Async method run on startup.
+    twitter.configure({
+        consumer_key: '0UqaQey3SWstAqNndvJGrzjZi',
+        consumer_secret: 'qVzWbWdPIAKkKSCuunZ2Ys9k1xw8cv7tAsso8XsAsg8F1J5f0c',
+        application_only: true
+    });
+
+    console.log(twitter);
+
     next(null);
 };
 
