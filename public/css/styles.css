@@ -18,3 +18,9 @@
     padding-bottom:1em;
     margin-bottom:1em
 }
+
+.grooveborder {
+    border-bottom: 1px groove gray;
+    padding-bottom:1em;
+    margin-bottom:1em
+}

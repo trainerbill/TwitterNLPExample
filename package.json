@@ -20,6 +20,7 @@
     "kraken-js": "~0.6.1",
     "less": "~1.3.3",
     "makara": "~0.3.0",
+    "mongoose": "^3.8.12",
     "mtwitter": "^1.6.4",
     "nconf": "~0.6.8",
     "node-twitter-api": "^1.2.2",

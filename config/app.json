@@ -41,5 +41,13 @@
 //     "view engine": "js",
 //     "views": "path:./.build/templates"
 // }
+    "databaseConfig": {
+        "host": "localhost",
+        "database": "TwitterNLP"
+    },
+    "twitter": {
+        "consumer_key": "0UqaQey3SWstAqNndvJGrzjZi",
+        "consumer_secret": "qVzWbWdPIAKkKSCuunZ2Ys9k1xw8cv7tAsso8XsAsg8F1J5f0c"
+    }
 
 }

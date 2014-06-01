@@ -1,54 +1,110 @@
 {>"layouts/master" /}
 
 {<body}
-    <div data-ng-controller="Twitter" data-ng-init="csrf = '{_csrf}'">
-        <div class="row well well-sm" >
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-5 col-md-offset-5">
-                        <h1>{@pre type="content" key="greeting"/}</h1>
+    <div class="row">
+        <div class="col-md-7">
+            <div data-ng-controller="Twitter" data-ng-init="csrf = '{_csrf}'">
+            <div class="row well well-sm" >
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-4">
+                            <h1>{@pre type="content" key="greeting"/}</h1>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-md-8 col-md-offset-4">
+                            <form class="form-inline" role="form">
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Enter text to be analyzed" type="search" data-ng-model="twitter.search" />
+                                    <button class="btn btn-success" data-ng-click="Analyze()">Analyze</button>
+                                    <span><a href="#" data-ng-click="advanced = 1">Advanced</a></span>
+                                    <div data-ng-show="advanced">
+                                        <h4>Advanced Filters</h4>
+                                        <label>Count</label><input class="form-control" type="number" min="1" max="100" data-ng-model="twitter.count" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <div class="row" >
-                    <div class="col-md-5 col-md-offset-5">
-                        <form class="form-inline" role="form">
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Enter text to be analyzed" type="search" data-ng-model="twitter.search" />
-                                <button class="btn btn-success" data-ng-click="Analyze()">Analyze</button>
-                                <span><a href="#" data-ng-click="advanced = 1">Advanced</a></span>
-                                <div data-ng-show="advanced">
-                                    <h4>Advanced Filters</h4>
-                                    <label>Count</label><input class="form-control" type="number" min="1" max="100" data-ng-model="twitter.count" />
-                                </div>
-                            </div>
-                        </form>
+            </div>
+            <div class="row well well-sm" data-ng-show="twitter.results">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Results</h3>
+                        </div>
                     </div>
+                    <div class="row dashedborder wordbreak" data-ng-class="{~lb}positive: result.nlp.sentiment === 'Positive', negative: result.nlp.sentiment === 'Negative' {~rb}" data-ng-repeat="result in twitter.results">
+                        <div class="col-md-3 col-xs-3">
+                            ~~result.tweet.user~~
+                        </div>
+                        <div class="col-md-9 col-xs-9">
+                            ~~result.tweet.text~~
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row" data-ng-show="twitter.analyzing">
+                <div class=" col-md-offset-3 col-md-6">
+                    <img src="/img/loading.gif" alt="loading" />
                 </div>
             </div>
         </div>
-        <div class="row well well-sm" data-ng-show="twitter.results">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>Results</h3>
-                    </div>
-                </div>
-                <div class="row dashedborder" data-ng-class="{~lb}positive: result.nlp.sentiment === 'Positive', negative: result.nlp.sentiment === 'Negative' {~rb}" data-ng-repeat="result in twitter.results">
-                    <div class="col-md-3">
-                        ~~result.tweet.user~~
-                    </div>
-                    <div class="col-md-9">
-                        ~~result.tweet.text~~
-                    </div>
+        </div>
+        <div class="col-md-offset-1 col-md-4" data-ng-controller="History">
+            <div class="row well well-sm">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
 
+                            <ul class="list-inline">
+                                <li><h3>Recently Analyzed</h3></li>
+                                <li><span class="glyphicon glyphicon-search"></span></li>
+                                <li><input class="form-control" placeholder="Search" type="text" data-ng-model="historysearch"/></li>
+                                <li data-ng-click="historysearch = ''" style="cursor:pointer"><span class="glyphicon glyphicon-remove"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row" style="font-weight:bold">
+                        <div class="col-md-3 col-xs-3">Text</div>
+                        <div class="col-md-1 col-xs-1">#</div>
+                        <div class="col-md-4 col-xs-4">Last</div>
+                        <div class="col-md-3 col-xs-3">Results</div>
+                    </div>
+                    <div class="row dashedborder" data-ng-repeat="result in history.results | orderBy:'timestamp.raw':true | filter: { _id: historysearch } | limitTo: 10 ">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 col-xs-3">~~result._id~~</div>
+                                <div class="col-md-1 col-xs-1">~~result.count~~</div>
+                                <div class="col-md-4 col-xs-4">~~result.timestamp.formatted~~</div>
+                                <div class="col-md-3 col-xs-3" data-ng-switch data-on="result.show">
+                                    <button data-ng-switch-when="1" data-ng-click="result.show = 0" class="btn btn-danger btn-sm">Close</button>
+                                    <button data-ng-switch-default data-ng-click="result.show = 1" class="btn btn-primary btn-sm">Results</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" data-ng-show="result.show">
+                            <div class="col-md-12">
+                                <div class="row wordbreak" data-ng-repeat="tweet in result.tweets" data-ng-class="{~lb}positive: tweet.nlp.sentiment === 'Positive', negative: tweet.nlp.sentiment === 'Negative' {~rb}">
+                                    <div class="col-md-3 col-xs-3">
+                                        ~~tweet.tweet.user~~
+                                    </div>
+                                    <div class="col-md-9 col-xs-9">
+                                        ~~tweet.tweet.text~~
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 
     <script type="text/javascript" src="/js/angularapps/base.js"></script>
     <script type="text/javascript" src="/js/angularapps/controllers/twitter.js"></script>
+    <script type="text/javascript" src="/js/angularapps/controllers/history.js"></script>
 
 {/body}

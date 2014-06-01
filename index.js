@@ -3,18 +3,21 @@
 
 var kraken = require('kraken-js'),
     twitter = require('./lib/twitterconfig'),
+    mongoose = require('./lib/mongoose'),
     app = {};
 
 
 app.configure = function configure(nconf, next) {
     // Async method run on startup.
-    twitter.configure({
-        consumer_key: '0UqaQey3SWstAqNndvJGrzjZi',
-        consumer_secret: 'qVzWbWdPIAKkKSCuunZ2Ys9k1xw8cv7tAsso8XsAsg8F1J5f0c',
-        application_only: true
-    });
 
-    console.log(twitter);
+    //Configure twitter
+    var twitconfig = nconf.get('twitter');
+    twitconfig.application_only = true;
+    twitter.configure(twitconfig);
+
+    //Configure mongoose
+    mongoose.config(nconf.get('databaseConfig'));
+
 
     next(null);
 };
