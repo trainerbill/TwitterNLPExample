@@ -144,6 +144,11 @@ module.exports = function (app) {
                             });
                         });
                     }
+                    else {
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.write('[]');
+                        res.end();
+                    }
                 });
 
 
