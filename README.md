@@ -6,12 +6,13 @@
 1.  Java JDK
 2.  Stanford NLP
 3.  Build Essentials
+4.  MongoDB http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
 
 # Ubuntu Installation
 ```sh
 sudo apt-get install openjdk-6-jdk
 sudo apt-get install build-essential
-sudo apt-get install mongodb
+
 export JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64
 git clone https://github.com/trainerbill/TwitterNLPExample.git
 cd TwitterNLPExample

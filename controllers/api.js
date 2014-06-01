@@ -123,8 +123,11 @@ module.exports = function (app) {
             analyzeModel
                 .aggregate({ $group: { _id: "$key", timestamp: {$max: "$timestamp"}, count: {$sum: 1}}})
                 .sort({"timestamp.raw": -1}).limit(30).exec(function (err, data) {
-
+                    if (err) {
+                        console.log(err);
+                    }
                     var count = 0;
+                    console.log(data)
                     if( data !== undefined && data.length > 0 ) {
                         data.forEach( function (analyze) {
 
