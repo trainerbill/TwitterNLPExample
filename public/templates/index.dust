@@ -76,7 +76,7 @@
                     <div class="row dashedborder" data-ng-repeat="result in history.results | orderBy:'timestamp.raw':true | filter: { _id: historysearch } | limitTo: 10 ">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-3 col-xs-3">~~result._id~~</div>
+                                <div class="col-md-3 col-xs-3" data-ng-class="{~lb}positive: result.sentiment === 'Positive', negative: result.sentiment === 'Negative' {~rb}">~~result._id~~</div>
                                 <div class="col-md-1 col-xs-1">~~result.count~~</div>
                                 <div class="col-md-4 col-xs-4">~~result.timestamp.formatted~~</div>
                                 <div class="col-md-3 col-xs-3" data-ng-switch data-on="result.show">

@@ -127,7 +127,7 @@ module.exports = function (app) {
                         console.log(err);
                     }
                     var count = 0;
-                    console.log(data)
+
                     if( data !== undefined && data.length > 0 ) {
                         data.forEach( function (analyze) {
 
@@ -136,6 +136,22 @@ module.exports = function (app) {
                                 count++;
                                 //console.log(tweets);
                                 temp.tweets = tweets;
+                                if (temp.tweets !== undefined && temp.tweets.length > 0) {
+                                    var sentimentcheck = {Positive: 0, Negative: 0, Nuetral: 0};
+                                    temp.tweets.forEach( function (tweet) {
+                                        sentimentcheck[tweet.nlp.sentiment]++;
+                                    });
+
+                                    if (sentimentcheck.Positive > sentimentcheck.Negative) {
+                                        temp.sentiment = 'Positive';
+                                    }
+                                    else if (sentimentcheck.Positive < sentimentcheck.Negative) {
+                                        temp.sentiment = 'Negative';
+                                    }
+                                    else {
+                                        temp.sentiment = 'Neutral';
+                                    }
+                                }
                                 rvar.push(temp);
 
                                 if (count >= data.length) {
