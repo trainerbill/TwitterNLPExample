@@ -125,23 +125,25 @@ module.exports = function (app) {
                 .sort({"timestamp.raw": -1}).limit(30).exec(function (err, data) {
 
                     var count = 0;
-                    data.forEach( function (analyze) {
+                    if( data !== undefined && data.length > 0 ) {
+                        data.forEach( function (analyze) {
 
-                        var temp = analyze;
-                        tweetModel.find({key: analyze._id}).sort({"timestamp.raw": -1}).limit(30).exec(function (err, tweets) {
-                            count++;
-                            //console.log(tweets);
-                            temp.tweets = tweets;
-                            rvar.push(temp);
+                            var temp = analyze;
+                            tweetModel.find({key: analyze._id}).sort({"timestamp.raw": -1}).limit(30).exec(function (err, tweets) {
+                                count++;
+                                //console.log(tweets);
+                                temp.tweets = tweets;
+                                rvar.push(temp);
 
-                            if (count >= data.length) {
-                                console.log('count = '+ count);
-                                res.writeHead(200, { 'Content-Type': 'application/json' });
-                                res.write(JSON.stringify(rvar));
-                                res.end();
-                            }
+                                if (count >= data.length) {
+                                    console.log('count = '+ count);
+                                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                                    res.write(JSON.stringify(rvar));
+                                    res.end();
+                                }
+                            });
                         });
-                    });
+                    }
                 });
 
 
