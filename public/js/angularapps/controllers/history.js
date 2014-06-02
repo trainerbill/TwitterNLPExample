@@ -13,6 +13,8 @@ application.factory('HistoryResource', function ($resource) {
 }).controller('History', function ($scope, $rootScope, HistoryResource) {
 
     $scope.history = {};
+    $scope.history.tweetsearch = '';
+    $scope.history.sentimentfilter = '';
 
     //Watch for changes in twitter.results
     $scope.$watch('refreshHistory', function(newValue, oldValue) {

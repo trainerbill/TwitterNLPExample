@@ -13,6 +13,8 @@ application.factory('TwitterResource', function ($resource) {
 }).controller('Twitter', function ($scope, $rootScope, TwitterResource) {
     console.log('Rocking');
     $scope.twitter = {};
+    $scope.twitter.tweetsearch = '';
+    $scope.twitter.sentimentfilter = '';
     $scope.twitter.count = 1;
     $rootScope.refreshHistory = 0;
 

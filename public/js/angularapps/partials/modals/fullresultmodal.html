@@ -11,24 +11,45 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>Results</h4>
+                                <ul class="list-inline">
+                                    <li><h4>Results</h4></li>
+
+                                </ul>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div>Last Analyzed: ~~history.fullresult.timestamp.formatted~~</div>
                                 <div>Times Analyzed: ~~history.fullresult.count~~</div>
-                                <div>Times Analyzed: ~~history.fullresult.tweets.length~~</div>
+                                <div>Tweets Analyzed: ~~history.fullresult.tweets.length~~</div>
                                 <div>Sentiment: ~~history.fullresult.sentiment~~</div>
+                                <div><h5>Sentiment Results</h5></div>
+                                <div>Positive: ~~history.fullresult.sentimentresults.Positive~~</div>
+                                <div>Negative: ~~history.fullresult.sentimentresults.Negative~~</div>
+                                <div>Neutral: ~~history.fullresult.sentimentresults.Neutral~~</div>
                             </div>
 
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>Tweets</h4>
+                                <ul class="list-inline">
+                                    <li><h4>Tweets</h4></li>
+                                    <li><span class="glyphicon glyphicon-search"></span></li>
+                                    <li><input class="form-control" placeholder="Search" type="text" data-ng-model="history.tweetsearch"/></li>
+                                    <li data-ng-click="history.tweetsearch = ''" style="cursor:pointer"><span class="glyphicon glyphicon-remove"></span></li>
+                                    <li>
+                                        <select class="form-control" data-ng-model="history.sentimentfilter">
+                                            <option value="" >Sentiment</option>
+                                            <option value="Positve" >Positve</option>
+                                            <option value="Negative" >Negative</option>
+                                            <option value="Neutral" >Neutral</option>
+                                        </select>
+                                    </li>
+                                </ul>
+
                             </div>
                         </div>
-                        <div class="row dashedborder wordbreak"  data-ng-repeat="result in history.fullresult.tweets">
+                        <div class="row dashedborder wordbreak"  data-ng-repeat="result in history.fullresult.tweets | filter: { tweet:{text: history.tweetsearch}, nlp: {sentiment: history.sentimentfilter} }">
                             <div class="col-md-12">
                                 <div class="row" style="font-weight: bold">
                                     <div class="col-md-3 col-xs-3">
@@ -38,7 +59,7 @@
                                         Tweet Text
                                     </div>
                                     <div class="col-md-2 col-xs-2">
-                                        
+
                                     </div>
                                     <div class="col-md-2 col-xs-2">
 

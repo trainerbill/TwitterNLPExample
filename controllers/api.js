@@ -27,7 +27,7 @@ module.exports = function (app) {
     function saveTweet(data) {
         var tweetModel = require('../models/tweetModel');
         var date = new Date();
-        data.timestamp = {
+        data.tweettimestamp = {
             raw: date.getTime(),
             formatted: (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear()
         }
@@ -142,7 +142,7 @@ module.exports = function (app) {
                                 //console.log(tweets);
                                 temp.tweets = tweets;
                                 if (temp.tweets !== undefined && temp.tweets.length > 0) {
-                                    var sentimentcheck = {Positive: 0, Negative: 0, Nuetral: 0};
+                                    var sentimentcheck = {Positive: 0, Negative: 0, Neutral: 0};
                                     temp.tweets.forEach( function (tweet) {
                                         sentimentcheck[tweet.nlp.sentiment]++;
                                     });
@@ -157,6 +157,7 @@ module.exports = function (app) {
                                         temp.sentiment = 'Neutral';
                                     }
                                 }
+                                temp.sentimentresults = sentimentcheck;
                                 rvar.push(temp);
 
                                 if (count >= data.length) {

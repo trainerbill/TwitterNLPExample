@@ -15,7 +15,7 @@ var tweetModel = function () {
             sentiment: String,
             sentences: Array
         },
-        timestamp: {
+        tweettimestamp: {
             raw: Number,
             formatted: String
         }

@@ -14,7 +14,26 @@
                                 <h3>Results</h3>
                             </div>
                         </div>
-                        <div class="row dashedborder wordbreak"  data-ng-repeat="result in twitter.results">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="list-inline">
+                                    <li><h4>Tweets</h4></li>
+                                    <li><span class="glyphicon glyphicon-search"></span></li>
+                                    <li><input class="form-control" placeholder="Search" type="text" data-ng-model="twitter.tweetsearch"/></li>
+                                    <li data-ng-click="twitter.tweetsearch = ''" style="cursor:pointer"><span class="glyphicon glyphicon-remove"></span></li>
+                                    <li>
+                                        <select class="form-control" data-ng-model="twitter.sentimentfilter">
+                                            <option value="" >Sentiment</option>
+                                            <option value="Positive" >Positive</option>
+                                            <option value="Negative" >Negative</option>
+                                            <option value="Neutral" >Neutral</option>
+                                        </select>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="row dashedborder wordbreak"  data-ng-repeat="result in twitter.results | filter: { tweet:{text: twitter.tweetsearch}, nlp: {sentiment: twitter.sentimentfilter} }">
                             <div class="col-md-12">
                                 <div class="row" data-ng-class="{positive: result.nlp.sentiment === 'Positive', negative: result.nlp.sentiment === 'Negative'}">
                                     <div class="col-md-3 col-xs-3">
