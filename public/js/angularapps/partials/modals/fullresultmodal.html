@@ -1,0 +1,91 @@
+<!-- Sample API Execution Modal -->
+<div class="modal fade" id="fullResultModal" tabindex="-1" role="dialog" aria-labelledby="fullResultDisplayModal" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"  id="fullResultModalLabel">Analyzation Results</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Results</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div>Last Analyzed: ~~history.fullresult.timestamp.formatted~~</div>
+                                <div>Times Analyzed: ~~history.fullresult.count~~</div>
+                                <div>Times Analyzed: ~~history.fullresult.tweets.length~~</div>
+                                <div>Sentiment: ~~history.fullresult.sentiment~~</div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Tweets</h4>
+                            </div>
+                        </div>
+                        <div class="row dashedborder wordbreak"  data-ng-repeat="result in history.fullresult.tweets">
+                            <div class="col-md-12">
+                                <div class="row" style="font-weight: bold">
+                                    <div class="col-md-3 col-xs-3">
+                                        Twitter User
+                                    </div>
+                                    <div class="col-md-5 col-xs-5">
+                                        Tweet Text
+                                    </div>
+                                    <div class="col-md-2 col-xs-2">
+                                        
+                                    </div>
+                                    <div class="col-md-2 col-xs-2">
+
+                                    </div>
+                                </div>
+                                <div class="row" data-ng-class="{positive: result.nlp.sentiment === 'Positive', negative: result.nlp.sentiment === 'Negative'}">
+                                    <div class="col-md-3 col-xs-3">
+                                        ~~result.tweet.user~~
+                                    </div>
+                                    <div class="col-md-5 col-xs-5">
+                                        ~~result.tweet.text~~
+                                    </div>
+                                    <div class="col-md-2 col-xs-2">
+                                        ~~result.timestamp.formatted~~
+                                    </div>
+                                    <div class="col-md-2 col-xs-2" data-ng-switch data-on="result.full">
+                                        <button class="btn btn-danger btn-sm" data-ng-switch-when="1" data-ng-click="result.full = 0">Close</button>
+                                        <button class="btn btn-primary btn-xs" data-ng-switch-default data-ng-click="result.full = 1">Full Result</button>
+                                    </div>
+                                </div>
+                                <div class="row" data-ng-show="result.full">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h4>Sentences</h4>
+                                                <div class="row" data-ng-repeat="sentence in result.nlp.sentences track by $index">
+                                                    <div class="col-md-6 col-xs-6">
+                                                        Sentence ~~sentence.id~~
+                                                    </div>
+                                                    <div class="col-md-6 col-xs-6" data-ng-class="{positive: sentence.sentiment === 'Positive', negative: sentence.sentiment === 'Negative'}">
+                                                        ~~sentence.sentiment~~
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -25,6 +25,7 @@ application.factory('TwitterResource', function ($resource) {
             $scope.twitter.results = data;
             $scope.twitter.analyzing = 0;
             $rootScope.refreshHistory++;
+            console.log($scope.twitter);
         });
     };
 });

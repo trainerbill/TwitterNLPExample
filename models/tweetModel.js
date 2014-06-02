@@ -12,7 +12,12 @@ var tweetModel = function () {
             text: String
         },
         nlp: {
-            sentiment: String
+            sentiment: String,
+            sentences: Array
+        },
+        timestamp: {
+            raw: Number,
+            formatted: String
         }
     });
 

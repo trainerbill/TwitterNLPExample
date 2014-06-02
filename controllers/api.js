@@ -75,10 +75,12 @@ module.exports = function (app) {
 
                                     //Check for multiple sentences
                                     if (result.document.sentences.sentence instanceof Array) {
+                                        temp.nlp.sentences = [];
                                         var sentimentcheck = {Positive: 0, Negative:0, Neutral: 0}
                                         result.document.sentences.sentence.forEach( function (value) {
-                                            console.log(value);
+
                                             sentimentcheck[value.$.sentiment]++;
+                                            temp.nlp.sentences.push(value.$)
                                         });
                                         console.log(sentimentcheck);
                                         if (sentimentcheck.Positive > sentimentcheck.Negative) {
@@ -90,9 +92,12 @@ module.exports = function (app) {
                                         else {
                                             temp.nlp.sentiment = 'Neutral';
                                         }
+
+
                                     }
                                     else {
                                         temp.nlp.sentiment = result.document.sentences.sentence.$.sentiment;
+                                        temp.nlp.sentences = [result.document.sentences.sentence.$];
                                     }
 
                                     rvar.push(temp);
